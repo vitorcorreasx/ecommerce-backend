@@ -1,8 +1,9 @@
 const { ApolloServer } = require('apollo-server');
-const database = require('./database');
+const knex = require('./database');
 require('dotenv').config()
 const UserController = require('./controllers/UserController')
 const ProductController = require('./controllers/ProductController')
+const bcrypt = require('bcrypt') 
 
 const typeDefs = `
   type Product {
@@ -33,14 +34,14 @@ const typeDefs = `
 `
 const resolvers = {
   Query: {
-    async allProducts(_, args, {database}){
-      return await database('products')
+    async allProducts(_, args, {knex}){
+      return await knex('products')
     },
-    async loginUser(_, args, {database}){
-      return await UserController.login(args, database)
+    async loginUser(_, args, {knex, bcrypt}){
+      return await UserController.login(args, {knex, bcrypt})
     },
-    async userProducts(_, {userId}, {database}){
-      return await ProductController.get(userId, database)
+    async userProducts(_, {userId}, {knex}){
+      return await ProductController.get(userId, knex)
     }
   },
   Cart:{
@@ -49,14 +50,14 @@ const resolvers = {
     }
   },
   Mutation: {
-    async createUser(_, args, {database}){
-      return await UserController.create(args, database)
+    async createUser(_, args, {knex, bcrypt}){
+      return await UserController.create(args, {knex, bcrypt})
     },
-    async addProduct(_, {userId, productId }, {database}){
-      return await ProductController.addProduct({userId, productId}, database)
+    async addProduct(_, {userId, productId }, {knex}){
+      return await ProductController.addProduct({userId, productId}, knex)
     },
-    async removeProduct(_, {userId, productId }, {database}){
-      return await ProductController.removeProduct({userId, productId}, database)
+    async removeProduct(_, {userId, productId }, {knex}){
+      return await ProductController.removeProduct({userId, productId}, knex)
     },
   }
 }
@@ -66,7 +67,7 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context:  () => {
-   return {database}
+   return {knex, bcrypt}
   }
 });
 
