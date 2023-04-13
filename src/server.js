@@ -11,6 +11,7 @@ const typeDefs = `
     title: String!
     price: Float!
     amount: Int!
+    total: Float!
   }
   type User {
     id: Int!

@@ -1,6 +1,6 @@
 exports.up = function(knex) {
   return knex.schema.alterTable('user_products', (table) => {
-    table.integer('total').notNullable;
+    table.decimal('total').notNullable;
   })
 };
 
