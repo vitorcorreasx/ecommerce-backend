@@ -3,6 +3,7 @@ const knex = require('./database');
 require('dotenv').config()
 const UserController = require('./controllers/UserController')
 const ProductController = require('./controllers/ProductController')
+const CardController = require('./controllers/CardController')
 const bcrypt = require('bcrypt') 
 
 const typeDefs = `
@@ -18,6 +19,13 @@ const typeDefs = `
     username: String!
     password: String!
   }
+  type Card {
+    number: ID!
+    cpf: ID!
+    name: String!
+    balance: Float!
+    security_code: Int!
+  }
   type Cart{
     products: [Product!]
   }
@@ -26,6 +34,7 @@ const typeDefs = `
     allProducts: [Product]
     loginUser(username: String!, password: String!): User
     userProducts(userId: Int!): Cart
+    getCard(numberCard: ID!): Card
   }
   type Mutation {
     createUser(username: String!, password: String!): User
@@ -43,6 +52,9 @@ const resolvers = {
     },
     async userProducts(_, {userId}, {knex}){
       return await ProductController.get(userId, knex)
+    },
+    async getCard(_, numberCard, {knex}){
+      return await CardController.get(numberCard, knex)
     }
   },
   Cart:{
@@ -54,7 +66,7 @@ const resolvers = {
     async createUser(_, args, {knex, bcrypt}){
       return await UserController.create(args, {knex, bcrypt})
     },
-    async addProduct(_, {userId, productId }, {knex}){
+    async addProduct(_, {userId, productId}, {knex}){
       return await ProductController.addProduct({userId, productId}, knex)
     },
     async removeProduct(_, {userId, productId }, {knex}){
