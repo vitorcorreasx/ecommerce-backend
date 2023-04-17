@@ -1,6 +1,6 @@
 const { ApolloServer } = require('apollo-server');
 const typeDefs = require('./graphql/schemas/typeDefs')
-const resolvers = require('./graphql/resolvers')
+const resolvers = require('./graphql/resolvers');
 
 const knex = require('./database');
 require('dotenv').config()

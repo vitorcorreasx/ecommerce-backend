@@ -1,14 +1,12 @@
 const { addProduct, createUser, removeProduct } = require('./mutation')
-const { allProducts, getCard, loginUser, userProducts, verifyCard } = require('./query')
+const { allProducts, loginUser, userProducts } = require('./query')
 const { products } = require('./field')
 
 const resolvers = {
   Query: {
     allProducts,
-    getCard,
     loginUser,
     userProducts,
-    verifyCard
   },
   Cart: {
     products
