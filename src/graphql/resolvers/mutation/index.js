@@ -1,4 +1,4 @@
-const { addProduct, removeProduct } = require('./product')
-const { createUser } = require('./register')
+const { addProduct, removeProduct } = require('./product');
+const { createUser } = require('./register');
 
-module.exports = { addProduct, removeProduct, createUser }
+module.exports = { addProduct, removeProduct, createUser };

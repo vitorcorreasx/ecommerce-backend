@@ -21,7 +21,7 @@ const typeDefs = gql`
       security_code: Int!
     }
     type Cart{
-      products: [Product!]
+      products: [Product]!
     }
     input CardInput {
       number: String!
@@ -42,5 +42,5 @@ const typeDefs = gql`
       removeProduct(userId: Int!, productId: Int!): Product
     }
     
-`
-module.exports = typeDefs
+`;
+module.exports = typeDefs;

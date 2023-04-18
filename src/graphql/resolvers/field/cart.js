@@ -1,4 +1,4 @@
 const products = (parents) => {
-  return parents
-}
-module.exports = { products }
+  return parents;
+};
+module.exports = { products };

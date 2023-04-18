@@ -6,16 +6,16 @@ module.exports = {
                 .where('user', userId)
   },
   async addProduct({userId, productId}, knex){
-    const products = await knex('user_products').where({user: userId, product: productId})
     const productPrice = await knex('products').first('price').where({id: productId})
     const productAmount = await knex('user_products').first('amount').where({user: userId, product: productId})
 
-    if(products != ''){
+    try {
       const totalPrice = productPrice.price * (productAmount.amount +1)
-      await knex('user_products').where({user: userId, product: productId}).increment('amount', 1).update('total', totalPrice)
-      return
-    }
+      await knex('user_products').where({user: userId, product: productId}).increment('amount', 1).update('total', totalPrice) 
+    } catch {
       await knex('user_products').insert({user: userId, product: productId, amount: 1, total: productPrice.price})
+    }
+   
   },
   async removeProduct({userId, productId}, knex) {
     const productPrice = await knex('products').first('price').where({id: productId})

@@ -3,9 +3,9 @@ exports.up = function(knex) {
     table.integer('user').notNullable;
     table.integer('product').notNullable;
     table.integer('amount').notNullable;
-  })
+  });
 };
 
 exports.down = function(knex) {
-  return knex.schema.dropTable('user_products')
+  return knex.schema.dropTable('user_products');
 };

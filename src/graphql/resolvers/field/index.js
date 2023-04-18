@@ -1,2 +1,2 @@
-const { products } = require('./cart')
-module.exports = { products }
+const { products } = require('./cart');
+module.exports = { products };
