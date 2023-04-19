@@ -1,5 +1,7 @@
+const bcrypt = require('bcrypt');
+
 module.exports = {
-  async create({username, password}, {knex, bcrypt}){
+  async create({username, password}, {knex}){
     const checkUser = await knex('users').first('username').where({username: username});
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -11,7 +13,7 @@ module.exports = {
       return await knex('users').first('id').where({username: username});
     }
   },
-  async login({username, password}, {knex, bcrypt}){
+  async login({username, password}, {knex}){
     const validUser = await knex('users').first('username').where({username: username}).select('password');
     const hashPass = await bcrypt.compare(password, validUser.password);
     if(hashPass){

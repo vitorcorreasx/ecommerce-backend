@@ -14,4 +14,4 @@ module.exports = {
       directory: './src/database/migrations',
     }
   },
-}
+};
