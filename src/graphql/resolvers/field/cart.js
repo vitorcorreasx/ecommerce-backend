@@ -1,4 +1,7 @@
-const products = (parents) => {
-  return parents;
+module.exports = {
+  Cart: {
+    products: (parents) => {
+      return parents;
+    },
+  }
 };
-module.exports = { products };
