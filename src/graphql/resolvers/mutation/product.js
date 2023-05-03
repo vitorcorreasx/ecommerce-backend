@@ -1,21 +1,22 @@
 module.exports = {
   Mutation: {
-    addProduct: async (_, { user, product }, { knex }) => {
-      await knex('user_products').where({user, product}).increment('amount', 1);
-      const {price} = await knex('products').where({id: product}).first('price');
-      const {amount} = await knex('user_products').where({user, product}).first('amount');
-      await knex('user_products').where({user, product}).update('total', price * amount);
-      return await knex('user_products').first('user').where({user});
+    addUserProduct: async (_, { userId, input}, {knex}) => {
+      if(await knex('user_products').where({user_id: userId, product_id: input[0].id}) == '') {
+        return await knex('user_products').insert({
+          user_id: userId,
+          product_id: input[0].id,
+          amount: input[0].amount,
+          total: input[0].total
+        });
+      }
+      await knex('user_products').where({user_id: userId, product_id: input[0].id}).increment('amount', 1);
     },
-    removeProduct: async (_, { user, product }, { knex }) => {
-      await knex('user_products').where({user, product}).decrement('amount', 1);
-      await knex('user_products').where({user, product, amount: 0}).del();
-      const {price} = await knex('products').where({id: product}).first('price');
-      const {amount} = await knex('user_products').where({user, product}).first('amount');
-      await knex('user_products').where({user, product}).update('total', price * amount);
-      
-      return await knex('user_products').first('user', 'total').where({user});
+    updateUserProducts: async (_, { userId, input}, {knex}) => {
+      input.forEach(async (item) => {
+        await knex('user_products').where({user_id: userId, product_id: item.id, amount: 0}).del();
+        await knex('user_products').where({user_id: userId, product_id: item.id}).update({amount: item.amount, total: item.total});
+      });
+      return await knex('users').first('id').where({id: userId});
     }
   }
 };
-

@@ -1,23 +1,32 @@
 type Product {
-    id: ID!
-    title: String!
-    price: Float!
-    amount: Int!
-    total: Float!
-  }
-  type User {
-    id: ID!
-    username: String!
-    password: String!
-    products: [Product]!
-  }
-  type Query {
-    allProducts: [Product]
-    loginUser(username: String!, password: String!): User
-    userProducts(user: ID!): User
-  }
-  type Mutation {
-    createUser(username: String!, password: String!): User
-    addProduct(user: ID!, product: ID!): User!
-    removeProduct(user: ID!, product: ID!): User!
-  }
+  id: ID!
+  title: String!
+  price: Float!
+  amount: Int!
+  total: Float!
+}
+type User {
+  id: ID!
+  username: String!
+  password: String!
+  products: [Product]!
+}
+input Cart {
+  id: ID!
+  title: String!
+  price: Float!
+  amount: Int!
+  total: Float!
+}
+
+type Query {
+  allProducts: [Product]!
+  loginUser(username: String!, password: String!): User!
+  userProducts(userId: ID!): User!
+}
+
+type Mutation {
+  createUser(username: String!, password: String!): User!
+  addUserProduct(userId: ID!, input: [Cart]!): User!
+  updateUserProducts(userId: ID!, input: [Cart]!): User!
+}
