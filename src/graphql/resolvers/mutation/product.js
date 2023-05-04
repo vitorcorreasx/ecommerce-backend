@@ -1,17 +1,16 @@
 module.exports = {
   Mutation: {
     addUserProduct: async (_, { userId, input}, {knex}) => {
-      const res = await knex('user_products').first('user_id').where({user_id: userId});
       if(await knex('user_products').where({user_id: userId, product_id: input[0].id}) == '') {
-        await knex('user_products').insert({
+        const [res] =  await knex('user_products').insert({
           user_id: userId,
           product_id: input[0].id,
           amount: input[0].amount,
           total: input[0].total
-        });
+        }, ['user_id']);
         return res;
       }
-      await knex('user_products').where({user_id: userId, product_id: input[0].id}).increment('amount', 1);
+      const [res] = await knex('user_products').where({user_id: userId, product_id: input[0].id}).increment('amount', 1).returning('user_id');
       return res;
     },
     updateUserProducts: async (_, { userId, input}, {knex}) => {
