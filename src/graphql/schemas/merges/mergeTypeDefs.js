@@ -1,7 +1,7 @@
 const { loadSchemaSync } = require('@graphql-tools/load');
 const { GraphQLFileLoader } = require('@graphql-tools/graphql-file-loader');
 
-const typeDefs = loadSchemaSync('./**/**/*.graphql', { 
+const typeDefs = loadSchemaSync('../**/**/*.graphql', { 
   loaders: [ new GraphQLFileLoader() ] 
 });
 
