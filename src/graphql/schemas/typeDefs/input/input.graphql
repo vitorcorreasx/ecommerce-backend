@@ -1,5 +1,5 @@
 input Cart {
-  id: ID!
+  productId: ID!
   title: String!
   price: Float!
   amount: Int!
