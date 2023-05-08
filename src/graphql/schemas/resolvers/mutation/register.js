@@ -11,7 +11,7 @@ module.exports = {
           username,
           password: hashedPassword
         });
-        return await knex('users').where({username}).first('id');
+        return await knex('users').where({username}).first('id', 'username');
       }
     }
   }
