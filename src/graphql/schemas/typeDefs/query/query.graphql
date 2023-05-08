@@ -1,5 +1,5 @@
 type Query {
   allProducts: [Product!]!
-  loginUser(username: String!, password: String!): String!
+  loginUser(username: String!, password: String!): User!
   userProducts(userId: ID!): User!
 }

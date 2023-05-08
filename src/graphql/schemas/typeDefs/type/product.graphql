@@ -3,4 +3,5 @@ type Product {
   title: String!
   price: Float!
   amount: Int!
+  total: Float!
 }
