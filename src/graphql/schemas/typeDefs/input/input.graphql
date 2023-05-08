@@ -1,0 +1,7 @@
+input Cart {
+  productId: ID!
+  title: String!
+  price: Float!
+  amount: Int!
+  total: Float!
+}

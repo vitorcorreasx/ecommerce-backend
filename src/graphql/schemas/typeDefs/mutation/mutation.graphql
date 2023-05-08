@@ -1,0 +1,5 @@
+type Mutation {
+  createUser(username: String!, password: String!): User!
+  addUserProduct(userId: ID!, input: Cart!): User!
+  updateUserProducts(userId: ID!, input: [Cart]!): User!
+}
